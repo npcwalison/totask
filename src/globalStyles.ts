@@ -12,6 +12,8 @@ const GlobalStyle = createGlobalStyle`
   body {
     background: #8C52FF;
     font-family: 'Poppins', Sans-Serif;
+    padding: 30px;
+    color: #333;
   }
 `;
 

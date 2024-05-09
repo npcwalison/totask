@@ -1,15 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Container } from "./styles";
 
-type TasksType = {
-    id: number;
-    text: string;
-    category: string;
-    isCompleted: boolean;
-}[];
+import TaskItem from "./components/TaskItem";
+import TaskForm from "./components/TaskForm";
 
 function App() {
-    const [tasks, setTasks] = useState<TasksType>([
+    const [tasks, setTasks] = useState([
         {
             id: 1,
             text: "Criar funcionalidade X para o sistema de tarefas",
@@ -29,26 +25,28 @@ function App() {
             isCompleted: false,
         },
     ]);
+
+    const addTask = (text, category) => {
+        const newTask = [...tasks, {
+            id: Math.floor(Math.random() * 10000),
+            text,
+            category,
+            isCompleted: false,
+        }];
+
+        setTasks(newTask);
+    }
+
     return (
         <Container>
             <h1>Lista de Tarefas</h1>
-
             <div className="todo-list">
                 {tasks.map((task) => (
-                    <div className="task">
-
-                        <div className="content">
-                            <p>{task.text}</p>
-                            <p className="category">({task.category})</p>
-                        </div>
-
-                        <div>
-                            <button>Completar</button>
-                            <button>X</button>
-                        </div>
-                    </div>
+                    <TaskItem key={task.id} task={task} />
                 ))}
             </div>
+
+            <TaskForm addTask={addTask} />
         </Container>
     );
 }
