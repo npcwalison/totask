@@ -4,6 +4,7 @@ import { Container } from "./styles";
 import TaskItem from "./components/TaskItem";
 import TaskForm from "./components/TaskForm";
 import Search from "./components/Search";
+import Filter from "./components/Filter";
 
 function App() {
     const [tasks, setTasks] = useState([
@@ -28,6 +29,9 @@ function App() {
     ]);
 
     const [search, setSearch] = useState("")
+
+    const [filter, setFilter] = useState("All")
+    const [sort, setSort] = useState("Asc")
 
     const addTask = (text: any, category: any) => {
         const newTask = [...tasks, {
@@ -57,9 +61,28 @@ function App() {
     return (
         <Container>
             <h1>Lista de Tarefas</h1>
-            <Search search={search} setSearch={setSearch}/>
+            <Search
+                search={search}
+                setSearch={setSearch}
+            />
+            <Filter
+                filter={filter}
+                setFilter={setFilter}
+                setSort={setSort}
+            />
             <div className="todo-list">
                 {tasks
+                .filter((task) =>
+                    filter === "All"
+                    ? true : filter === "Completed"
+                    ? task.isCompleted
+                    : !task.isCompleted
+                )
+                .sort((a: any, b: any) =>
+                    sort === "Asc"
+                        ? a.text.localeCompare(b.text)
+                        : b.text.localeCompare(a.text)
+                )
                 .filter((task) =>
                     task.text.toLowerCase().includes(search.toLowerCase())
                 )

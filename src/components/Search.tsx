@@ -2,7 +2,19 @@ import styled from "styled-components";
 import React, { Dispatch, SetStateAction } from "react";
 
 
-const Container = styled.div``;
+const Container = styled.div`
+    border-bottom: 1px solid #555;
+    margin-bottom: 20px;
+    width: 100%;
+
+    input {
+        padding: 5px;
+        margin-bottom: 10px;
+        border: 1px solid #DDD;
+        border-radius: 3px;
+        width: 100%;
+    }
+`;
 
 type SearchPorps = {
     search: string;
