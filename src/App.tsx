@@ -26,7 +26,7 @@ function App() {
         },
     ]);
 
-    const addTask = (text, category) => {
+    const addTask = (text: any, category: any) => {
         const newTask = [...tasks, {
             id: Math.floor(Math.random() * 10000),
             text,
@@ -37,12 +37,24 @@ function App() {
         setTasks(newTask);
     }
 
+    const removeTask = (id: number) => {
+        const newTask = [...tasks]
+        const filterTasks = newTask.filter(task =>
+            task.id !== id ? task : null
+        );
+        setTasks(filterTasks)
+    }
+
     return (
         <Container>
             <h1>Lista de Tarefas</h1>
             <div className="todo-list">
                 {tasks.map((task) => (
-                    <TaskItem key={task.id} task={task} />
+                    <TaskItem
+                        key={task.id}
+                        task={task}
+                        removeTask={removeTask}
+                    />
                 ))}
             </div>
 
