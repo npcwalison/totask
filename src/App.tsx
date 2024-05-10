@@ -3,6 +3,7 @@ import { Container } from "./styles";
 
 import TaskItem from "./components/TaskItem";
 import TaskForm from "./components/TaskForm";
+import Search from "./components/Search";
 
 function App() {
     const [tasks, setTasks] = useState([
@@ -25,6 +26,8 @@ function App() {
             isCompleted: false,
         },
     ]);
+
+    const [search, setSearch] = useState("")
 
     const addTask = (text: any, category: any) => {
         const newTask = [...tasks, {
@@ -54,8 +57,13 @@ function App() {
     return (
         <Container>
             <h1>Lista de Tarefas</h1>
+            <Search search={search} setSearch={setSearch}/>
             <div className="todo-list">
-                {tasks.map((task) => (
+                {tasks
+                .filter((task) =>
+                    task.text.toLowerCase().includes(search.toLowerCase())
+                )
+                .map((task) => (
                     <TaskItem
                         key={task.id}
                         task={task}
