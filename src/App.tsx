@@ -10,7 +10,7 @@ function App() {
             id: 1,
             text: "Criar funcionalidade X para o sistema de tarefas",
             category: "Trabalho",
-            isCompleted: false,
+            isCompleted: true,
         },
         {
             id: 2,
@@ -45,6 +45,12 @@ function App() {
         setTasks(filterTasks)
     }
 
+    const completeTask = (id: number) => {
+        const newTask = [...tasks]
+        newTask.map((task) => task.id ===  id ? task.isCompleted = !task.isCompleted : task);
+        setTasks(newTask)
+    }
+
     return (
         <Container>
             <h1>Lista de Tarefas</h1>
@@ -54,6 +60,7 @@ function App() {
                         key={task.id}
                         task={task}
                         removeTask={removeTask}
+                        completeTask={completeTask}
                     />
                 ))}
             </div>

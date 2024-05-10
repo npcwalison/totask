@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-const Container = styled.div`
+const Container = styled.div<{ validate: boolean }>`
+    text-decoration: ${(props) => (props.validate ? "line-through" : "none")};
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 10px;
@@ -29,11 +30,12 @@ type TasksType = {
 type PropsType = {
     task: TasksType;
     removeTask: (id: number) => void;
+    completeTask: (id: number) => void;
 };
 
-const TaskItem: React.FC<PropsType> = ({ task, removeTask }) => {
+const TaskItem: React.FC<PropsType> = ({ task, removeTask, completeTask }) => {
     return (
-        <Container>
+        <Container validate={task.isCompleted}>
             <div className="content">
                 <p>{task.text}</p>
                 <p className="category">({task.category})</p>
@@ -42,6 +44,7 @@ const TaskItem: React.FC<PropsType> = ({ task, removeTask }) => {
             <div>
                 <button
                     className="complete"
+                    onClick={() => completeTask(task.id)}
                 >Completar</button>
                 <button
                     className="remove"
